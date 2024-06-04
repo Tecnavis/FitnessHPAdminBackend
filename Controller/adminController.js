@@ -107,3 +107,38 @@ exports.getAdmin = asyncHandler(async(req,res)=>{
         res.status(500).json({error:"an error occurred while fectching data"})
     }
 })
+
+exports.getAdminById = asyncHandler(async(req,res)=>{
+    const {id} = req.params
+    try {
+        const response = await adminModel.findById(id)
+        res.status(200).json(response)
+    } catch (error) {
+        console.log(error)
+        res.status(500).send('An error occured while fetching data')
+    }
+})
+
+exports.editAdmin = asyncHandler(async(req, res)=>{
+    const {id} = req.params;
+    const {name, phone, role, email} = req.body;
+    const image = req.file ? req.file.filename : undefined;
+    console.log(req.params,'tjhe id')
+    console.log(req.body,'tjhe body')
+    console.log(req.file,'tjhe body')
+    try{  
+        const update = {
+            image:image, 
+            name:name,
+            phone:phone,
+            role:role,
+            email:email
+        }
+        console.log(update,'the data of update')
+        const updateData = await adminModel.findByIdAndUpdate(id, {$set:update}, {new:true})
+        res.status(200).json(updateData)
+       
+    }catch(err){
+        res.status(500).json({err:'error while updating data'})
+    }
+})

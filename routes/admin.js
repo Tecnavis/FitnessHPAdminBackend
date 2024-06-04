@@ -45,6 +45,8 @@ const pendingOrdersController = require('../Controller/pendingOrderController')
 // router.post('/postadmin',adminController.postadmin);
 router.post('/postsignin',adminController.postsignin);
 router.get('/getadmin',verifyToken,adminController.getAdmin);
+router.get('/getadminbyid/:id',verifyToken,adminController.getAdminById);
+router.put('/updateadminbyid/:id',upload.single('image'),verifyToken,adminController.editAdmin);
 
 // plans------
 

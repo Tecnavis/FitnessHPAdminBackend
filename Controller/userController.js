@@ -197,26 +197,20 @@ exports.userPostSignIn = asyncHandler(async(req, res) => {
 
 
 exports.getUser = async (req, res) => {
-    // const search = req.query.search;
-    // console.log(search, "the search term");
+    const search = req.query.search || '';
     try {
-        // const query = {};
-        // if (search) {
-        //     query.$or = [
-        //         { categories: { $regex: search, $options: 'i' } }
-        //     ];
-        // }
-        // console.log(query, "the query"); // Log the formed query
-        const response = await userModel.find({revealed:false});//adrd the query in find()
-        // console.log(response, "the response"); // Log the response from the database
-        res.status(200).json(response);
-        console.log(response,"the response")
+      const query = { 
+        revealed: false,
+        name: { $regex: search, $options: 'i' }
+      };
+      const response = await userModel.find(query);
+      res.status(200).json(response);
     } catch (err) {
-        console.error(err); // Log any errors
-        res.status(500).send('An error occurred while fetching data');
+      console.error(err); 
+      res.status(500).send('An error occurred while fetching data');
     }
-};
-
+  };
+  
 
 
 exports.getUserById = asyncHandler(async(req,res)=>{

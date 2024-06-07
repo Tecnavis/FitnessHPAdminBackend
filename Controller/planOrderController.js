@@ -267,7 +267,7 @@ exports.updateOrderToRejected = asyncHandler(async(req,res)=>{
         order.activeStatus = "Rejected";
         order.show = false;
         order.showUser = false;
-        user.authenticate = false
+        user.authenticate = false;
 
         // Save the updated order
         await order.save();
